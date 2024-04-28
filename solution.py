@@ -10,6 +10,12 @@ import time
 # if you look at the traffic in tcpdump or I prefer tcpick
 
 """
+#look for interesting readable stuff
+
+tcpick -yU -r insomniTrains.pcap  | grep -e '[^>]*$'
+
+# extract them
+
 tcpick -yU -r insomniTrains.pcap  | grep '<00><10><03><e9><00><03><06>'
 <00><10><03><e9><00><03><06>C1S100
 <00><10><03><e9><00><03><06>STS100
@@ -160,7 +166,8 @@ def main():
     check_sequence(open_sock, S1_00)
     check_sequence(open_sock, S1_01)
     check_sequence(open_sock, S3_00)
-    # this should yield S1_01 as correct
+    # it is also possible to run all meassages separately if oyu missed that they have common part and should work too
+    # but this is much more pretty
 
     # now attack the model track and win
     defeat_model(open_sock, S1_01)
@@ -168,6 +175,32 @@ def main():
 
 
 """
+run it...
+
+blablabla...
+
+None
+Begin emission:
+Finished sending 1 packets.
+*
+Received 1 packets, got 1 answers, remaining 0 packets
+###[ Raw ]### 
+  load      = '\x00\x00\x00\x00\x00\x06\\xff\x10\x03\\xe9\x00\x03'
+
+None
+Begin emission:
+Finished sending 1 packets.
+*
+Received 1 packets, got 1 answers, remaining 0 packets
+###[ Raw ]### 
+  load      = '\x00\x00\x00\x00\x00\x17\\xff\x03\x14GOTOTRAINSTATION    '
+
+b'\x00\x00\x00\x00\x00\x17\xff\x03\x14GOTOTRAINSTATION    '
+[+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] [+] 
+[+] Correct control sequence found! 
+[[17201, 21299, 12336], [21332, 21299, 12336], [17202, 21299, 12336], [21317, 21299, 12336]]
+Secret message is  �GOTOTRAINSTATION   
+
 Congrats you got correct sequence from the virtual challenge!
 
 Now, at the real setup you need to pay attention that the train is out of switch zone (LED is GREEN).
